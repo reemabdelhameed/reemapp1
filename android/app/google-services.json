@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "364019373598",
+    "project_id": "reemoapp-1",
+    "storage_bucket": "reemoapp-1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364019373598:android:bba1c7af35220ba5b9800f",
+        "android_client_info": {
+          "package_name": "com.example.app_reem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKeJKNleOxvHkPprp3FCX-nIb7vxOcRgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
