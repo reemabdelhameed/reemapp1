@@ -1,3 +1,4 @@
+import 'package:app_reem/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
@@ -45,7 +46,7 @@ late final TextEditingController _password;
                    password: password
                    );
               Navigator.of(context).pushNamedAndRemoveUntil(
-                '/main/', 
+                mainRoute, 
               (route)=> false,
                  );
               } 
@@ -61,7 +62,7 @@ late final TextEditingController _password;
               child: const Text('Login'),),
               TextButton(onPressed: (){
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/register/',
+                  registerRoute,
                  (route)=> false, );
               }, 
               child: Text('Don\'t have an account? Sign up here'),

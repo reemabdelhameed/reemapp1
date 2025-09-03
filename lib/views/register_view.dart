@@ -1,3 +1,4 @@
+import 'package:app_reem/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as devtools show log;
@@ -60,7 +61,7 @@ late final TextEditingController _password;
               child: const Text('Sign up'),),
               TextButton(onPressed: (){
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                '/login/',
+                loginRoute,
                (route)=> false);
               }, child: const Text('Already signed in? Log in here'),
               )
