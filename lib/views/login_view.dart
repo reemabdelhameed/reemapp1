@@ -1,4 +1,5 @@
 import 'package:app_reem/constants/routes.dart';
+import 'package:app_reem/utilities/show_error_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ late final TextEditingController _password;
     super.dispose();
   }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     return Scaffold(
       appBar: AppBar(title: const Text('Log in')),
       body: Column(
@@ -45,12 +46,15 @@ late final TextEditingController _password;
                   email: email,
                    password: password
                    );
+                   if(!mounted) return;
               Navigator.of(context).pushNamedAndRemoveUntil(
                 mainRoute, 
               (route)=> false,
                  );
               } 
-              on FirebaseAuthException catch (e) {
+              on FirebaseAuthException catch (e)  {
+                if(!mounted) return;
+            
                 if (e.code == 'user-not-found')
                 {
                   await showErrorDialog(
@@ -60,9 +64,29 @@ late final TextEditingController _password;
                 } else if (e.code == 'wrong-password'){
                   await showErrorDialog(
                     context,
-                   'Wrong password',
+                   'Wrong credentials',
                   );
+                } else if(e.code == 'invalid-credential'){
+                  await showErrorDialog(
+                    context,
+                   'Invalid credentials',);
                 }
+                else if(e.code == 'channel-error'){
+                  await showErrorDialog(
+                    context,
+                   'Empty text field',);
+                }
+                else {
+                   await showErrorDialog(
+                    context,
+                   'Error: ${e.code}',
+                   );
+                }
+              } catch (e) {
+                await showErrorDialog(
+                    context,
+                   e.toString(),
+                   );
               }
                
               }, 
@@ -80,21 +104,4 @@ late final TextEditingController _password;
         }
       }
 
-      Future<void> showErrorDialog(
-        BuildContext context,
-         String text,
-         ){
-
-         return showDialog(context: context, builder: (context){
-          return AlertDialog(
-          title: const Text('An error occured'),
-          content: Text(text),
-          actions: [
-            TextButton(onPressed: (){
-              Navigator.of(context).pop();
-            },
-             child: const Text('OK')),
-          ],
-         );
-         }, );
-         }
+      
