@@ -1,6 +1,7 @@
 import 'package:app_reem/constants/routes.dart';
+import 'package:app_reem/services/auth/auth_exceptions.dart';
+import 'package:app_reem/services/auth/auth_service.dart';
 import 'package:app_reem/utilities/show_error_dialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -42,54 +43,43 @@ late final TextEditingController _password;
                 final email= _email.text;
                 final password= _password.text;
               try {
-                 await FirebaseAuth.instance.signInWithEmailAndPassword(
+                 await AuthService.firebase().logIn(
                   email: email,
                    password: password
                    );
-                   if(!mounted) return;
-              Navigator.of(context).pushNamedAndRemoveUntil(
+                   final user =AuthService.firebase().currentUser;
+                   if(user?.isEmailVerified??false){
+                   Navigator.of(context).pushNamedAndRemoveUntil(
                 mainRoute, 
               (route)=> false,
                  );
-              } 
-              on FirebaseAuthException catch (e)  {
-                if(!mounted) return;
-            
-                if (e.code == 'user-not-found')
-                {
-                  await showErrorDialog(
-                    context,
-                   'User not found',
-                  );
-                } else if (e.code == 'wrong-password'){
-                  await showErrorDialog(
-                    context,
-                   'Wrong credentials',
-                  );
-                } else if(e.code == 'invalid-credential'){
-                  await showErrorDialog(
-                    context,
-                   'Invalid credentials',);
-                }
-                else if(e.code == 'channel-error'){
-                  await showErrorDialog(
-                    context,
-                   'Empty text field',);
-                }
-                else {
-                   await showErrorDialog(
-                    context,
-                   'Error: ${e.code}',
-                   );
-                }
-              } catch (e) {
+                   } else{
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                verifyEmailRoute, 
+              (route)=> false,
+                 );
+                   }
+                   
+              
+                 if(!mounted) return;
+              } on UserNotFoundAuthException{
                 await showErrorDialog(
+                  context,
+                   'User not found'
+                   );
+              } on WrongPasswordAuthException{
+                await showErrorDialog(
+                  context,
+                   'Wrong credentials'
+                   );
+              } on GenericAuthException{
+                 await showErrorDialog(
                     context,
-                   e.toString(),
+                   'Authentication error',
                    );
               }
-               
-              }, 
+              },
+             
               child: const Text('Login'),),
               TextButton(onPressed: (){
                 Navigator.of(context).pushNamedAndRemoveUntil(
