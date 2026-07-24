@@ -6,11 +6,10 @@ import 'package:app_reem/views/register_view.dart';
 import 'package:app_reem/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
+  runApp(
+    MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.amber,
@@ -18,51 +17,40 @@ void main() {
       ),
       home: const HomePage(),
       routes: {
-       loginRoute:(context)=> const LoginView(),
-       registerRoute: (context)=> const RegisterView(),
-       mainRoute:(context)=> const MainView(),
-       verifyEmailRoute: (context)=> const VerifyEmailView(),
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        mainRoute: (context) => const MainView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       },
     ),
-    
-    );
+  );
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: AuthService.firebase().initialize(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-          final user =AuthService.firebase().currentUser;
-          if (user!= null){
-           if (user.isEmailVerified){
-            return const MainView();
-           } else{
-            return const VerifyEmailView();
-           }
+      future: AuthService.firebase().initialize(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            final user = AuthService.firebase().currentUser;
+            if (user != null) {
+              if (user.isEmailVerified) {
+                return const MainView();
+              } else {
+                return const VerifyEmailView();
+              }
+            } else {
+              return const LoginView();
+            }
 
-          } else {
-            return const LoginView();
-          }
-          
-            
-            default:
+          default:
             return const CircularProgressIndicator();
-          }
-          
-        },
-        
-      );
-      }
-      }
-
-
-      
-
-
-  
+        }
+      },
+    );
+  }
+}
