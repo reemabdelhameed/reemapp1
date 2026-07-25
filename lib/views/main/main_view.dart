@@ -31,8 +31,14 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main View'),
+        title: const Text('Your Notes'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(newMainRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
@@ -63,17 +69,16 @@ class _MainViewState extends State<MainView> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               return StreamBuilder(
-                stream: _notesService.allNotes, 
-               builder: (context, snapshot)
-               {
-                switch(snapshot.connectionState){
-                  case ConnectionState.waiting:
-                    return const Text('Waitinf for all notes...');
-                  default:
-                    return const CircularProgressIndicator();
-                }
-               }
-               );
+                stream: _notesService.allNotes,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Text('Waiting for all notes...');
+                    default:
+                      return const CircularProgressIndicator();
+                  }
+                },
+              );
             default:
               return const CircularProgressIndicator();
           }
