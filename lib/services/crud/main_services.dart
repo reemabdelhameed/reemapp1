@@ -254,7 +254,7 @@ class NotesService {
       //create user table
       await db.execute(createUserTable);
       //create note table
-      await db.execute(createUserTable);
+      await db.execute(createNoteTable);
       await _cacheNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectory();
