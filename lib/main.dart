@@ -2,7 +2,7 @@ import 'package:app_reem/constants/routes.dart';
 import 'package:app_reem/services/auth/auth_service.dart';
 import 'package:app_reem/views/login_view.dart';
 import 'package:app_reem/views/main/main_view.dart';
-import 'package:app_reem/views/main/new_main_view.dart';
+import 'package:app_reem/views/main/create_update_main_view.dart';
 import 'package:app_reem/views/register_view.dart';
 import 'package:app_reem/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ void main() {
         registerRoute: (context) => const RegisterView(),
         mainRoute: (context) => const MainView(),
         verifyEmailRoute: (context) => const VerifyEmailView(),
-        newMainRoute :(context) => const NewMainView(), 
+        createOrUpdateMainRoute: (context) => const CreateUpdateMainView(),
       },
     ),
   );

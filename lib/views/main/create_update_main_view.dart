@@ -3,14 +3,14 @@ import 'package:app_reem/services/crud/main_services.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-class NewMainView extends StatefulWidget {
-  const NewMainView({super.key});
+class CreateUpdateMainView extends StatefulWidget {
+  const CreateUpdateMainView({super.key});
 
   @override
-  State<NewMainView> createState() => _NewMainViewState();
+  State<CreateUpdateMainView> createState() => _CreateUpdateMainViewState();
 }
 
-class _NewMainViewState extends State<NewMainView> {
+class _CreateUpdateMainViewState extends State<CreateUpdateMainView> {
   DatabaseNote? _note;
   late final NotesService _notesService;
   late final TextEditingController _textController;
