@@ -77,6 +77,12 @@ class _MainViewState extends State<MainView> {
                           onDeleteNote: (note) async {
                             await _notesService.deleteNote(id: note.id);
                           },
+                          onTap: (DatabaseNote note) async {
+                            Navigator.of(context).pushNamed(
+                              createOrUpdateMainRoute,
+                              arguments: note,
+                            );
+                          },
                         );
                       } else {
                         return const CircularProgressIndicator();

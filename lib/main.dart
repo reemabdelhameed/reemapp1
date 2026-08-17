@@ -6,7 +6,6 @@ import 'package:app_reem/views/main/create_update_main_view.dart';
 import 'package:app_reem/views/register_view.dart';
 import 'package:app_reem/views/verify_email_view.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
